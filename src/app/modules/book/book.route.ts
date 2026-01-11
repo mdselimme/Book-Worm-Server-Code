@@ -18,7 +18,7 @@ router.post("/",
 );
 
 //UPDATE BOOK ROUTE
-router.patch("/",
+router.patch("/:id",
     checkAuth(UserRole.ADMIN),
     multerUpload.single("file"),
     validateZodSchema(BookValidation.updateBookValidation),

@@ -28,7 +28,7 @@ const updateBook = async (bookId: string, bookInput: Partial<IBook>) => {
     //check book exist by id
     const bookExists = await Book.findById(bookId);
     if (!bookExists) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'Book data not found.');
+        throw new ApiError(httpStatus.NOT_FOUND, 'Book data not found. Invalid Book ID.');
     }
     //check book exist by title
     if (bookInput.title) {
@@ -56,7 +56,7 @@ const getAllBooks = async (query: any) => {
 
     const books = await queryBuilder({
         model: Book,
-        searchFields: ['title', 'author', 'description'],
+        searchFields: ['title', 'author'],
         query: {
             search: search,
             limit: limit,
@@ -80,7 +80,7 @@ const getBookById = async (id: string) => {
             select: 'title'
         });
     if (!book) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'Book data not found.');
+        throw new ApiError(httpStatus.NOT_FOUND, 'Book data not found. Invalid Book ID.');
     }
     return book;
 };
@@ -91,15 +91,15 @@ const deleteBookById = async (id: string): Promise<IBook | null> => {
     const book = await Book.findById(id);
     // If not found, throw not found error
     if (!book) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'Book data not found');
+        throw new ApiError(httpStatus.NOT_FOUND, 'Book data not found. Invalid Book ID.');
     }
     // If found, delete cover image from cloudinary
     if (book.coverImage) {
         await deleteImageFromCloudinary(book.coverImage);
     }
     // Then delete book
-    const deletedBook = await Book.findByIdAndDelete(id);
-    return deletedBook;
+    await Book.findByIdAndDelete(id);
+    return null;
 };
 
 export const BookService = {
