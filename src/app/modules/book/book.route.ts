@@ -32,13 +32,13 @@ router.get("/",
 
 //GET SINGLE BOOK ROUTE
 router.get("/:id",
-    BookController.getSingleBook
+    BookController.getBookById
 );
 
 //DELETE BOOK ROUTE
 router.delete("/:id",
     checkAuth(UserRole.ADMIN),
-    BookController.deleteBook
+    BookController.deleteBookById
 );
 
 

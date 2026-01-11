@@ -40,9 +40,56 @@ const updateBook = async (req: Request, res: Response) => {
     });
 };
 
+//GET ALL BOOKS CONTROLLER
+const getAllBooks = async (req: Request, res: Response) => {
+
+    const query = req.query;
+
+    const result = await BookService.getAllBooks(query);
+
+    ApiResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'All Books retrieved successfully.',
+        data: result
+    });
+};
+
+//GET ALL BOOKS CONTROLLER
+const getBookById = async (req: Request, res: Response) => {
+
+    const bookId = req.params.id;
+
+    const result = await BookService.getBookById(bookId as string);
+
+    ApiResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Find Book retrieved successfully.',
+        data: result
+    });
+};
+
+//DELETE BOOK CONTROLLER
+const deleteBookById = async (req: Request, res: Response) => {
+
+    const bookId = req.params.id;
+
+    const result = await BookService.deleteBookById(bookId as string);
+
+    ApiResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Book data deleted permanently successfully.',
+        data: result
+    });
+};
 
 
 export const BookController = {
     createBook,
     updateBook,
+    getAllBooks,
+    getBookById,
+    deleteBookById
 };
