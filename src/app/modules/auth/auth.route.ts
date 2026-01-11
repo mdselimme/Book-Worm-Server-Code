@@ -1,24 +1,32 @@
 import { Router } from "express";
+import validateZodSchema from "../../middleware/validateZodSchemaRequest";
+import { AuthValidation } from "./auth.validation";
+import { AuthController } from "./auth.controller";
+import { checkAuth } from "../../middleware/checkAuth";
+import { UserRole } from "../user/user.interface";
 
 const router = Router();
 
-// AUTH LOGIN ROUTE
-// router.post('/login',
-// );
-
-
-// // AUTH CHANGE PASSWORD ROUTE
-// router.post('/change-password',
-// );
-
-// // AUTH REFRESH TOKEN ROUTE
-// router.post('/refresh-token',
-
-// );
-
-// // AUTH LOGOUT ROUTE
-// router.post('/logout',
-
-// );
+// AUTH LOGIN ROUTE 
+router.post('/login',
+    validateZodSchema(AuthValidation.loginValidation),
+    AuthController.logInUser
+);
+//AUTH CHANGE PASSWORD ROUTE
+router.patch('/change-password',
+    checkAuth(...Object.values(UserRole)),
+    validateZodSchema(AuthValidation.changePasswordValidation),
+    AuthController.changePassword
+);
+//AUTH REFRESH TOKEN ROUTE
+router.post('/refresh-token',
+    checkAuth(...Object.values(UserRole)),
+    AuthController.undoRefreshToken
+);
+// AUTH LOGOUT ROUTE
+router.post('/logout',
+    checkAuth(...Object.values(UserRole)),
+    AuthController.logOutUser
+);
 
 export const AuthRouter = router;
