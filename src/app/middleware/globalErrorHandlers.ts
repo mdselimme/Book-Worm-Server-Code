@@ -9,6 +9,7 @@ import { handlerCastError } from "../errorHelpers/handleCastError";
 import { handleValidationError } from "../errorHelpers/handleValidationError";
 import { handleZodError } from "../errorHelpers/handleZodError";
 import ApiError from "../utils/ApiError";
+import { deleteImageFromCloudinary } from "../config/cloudinary.config";
 
 
 
@@ -18,6 +19,11 @@ export const globalErrorHandler = async (error: any, req: Request, res: Response
     if (envVars.NODE_ENV === 'development') {
         console.error("Error Details:", error);
     };
+
+
+    if (req.file) {
+        await deleteImageFromCloudinary(req.file.path);
+    }
 
     let errorSources: IErrorSource[] = [];
     let statusCode = 500;

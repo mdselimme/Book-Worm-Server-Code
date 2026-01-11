@@ -6,6 +6,13 @@ interface IEnvVariables {
     NODE_ENV: 'development' | 'production' | 'test';
     DB_URL: string;
     CLIENT_SITE_URL: string;
+    BCRYPT_SALT_ROUNDS: string;
+    CLOUDINARY: {
+        CLOUD_NAME: string;
+        API_KEY: string;
+        API_SECRET: string;
+        SECRET: string;
+    }
 };
 
 // Load and validate environment variables
@@ -14,6 +21,11 @@ const loadEnvVariables = (): IEnvVariables => {
     const requiredEnvVars = [
         'PORT', 'NODE_ENV', 'DB_URL',
         "CLIENT_SITE_URL",
+        "BCRYPT_SALT_ROUNDS",
+        "CLOUDINARY_CLOUD_NAME",
+        "CLOUDINARY_API_KEY",
+        "CLOUDINARY_API_SECRET",
+        "CLOUDINARY_SECRET"
     ];
 
     requiredEnvVars.forEach((varName) => {
@@ -27,6 +39,13 @@ const loadEnvVariables = (): IEnvVariables => {
         NODE_ENV: process.env.NODE_ENV as 'development' | 'production' | 'test',
         DB_URL: process.env.DB_URL as string,
         CLIENT_SITE_URL: process.env.CLIENT_SITE_URL as string,
+        BCRYPT_SALT_ROUNDS: process.env.BCRYPT_SALT_ROUNDS as string,
+        CLOUDINARY: {
+            CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME as string,
+            API_KEY: process.env.CLOUDINARY_API_KEY as string,
+            API_SECRET: process.env.CLOUDINARY_API_SECRET as string,
+            SECRET: process.env.CLOUDINARY_SECRET as string,
+        }
     };
 };
 
