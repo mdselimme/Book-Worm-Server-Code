@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthRouter } from "../modules/auth/auth.route";
 import { UserRouter } from "../modules/user/user.route";
 import { CategoriesRouter } from "../modules/categories/categories.route";
+import { BookRouter } from "../modules/book/book.route";
 
 
 interface IRoute {
@@ -23,6 +24,10 @@ const allRoutes: IRoute[] = [
     {
         path: "/categories",
         route: CategoriesRouter
+    },
+    {
+        path: "/book",
+        route: BookRouter
     }
 ];
 
