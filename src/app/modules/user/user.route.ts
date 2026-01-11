@@ -23,6 +23,12 @@ router.patch('/',
     validateZodSchema(UserValidation.userUpdateValidation),
     UserController.updateUser
 );
+// USER ROLE UPDATE ROUTE
+router.patch('/update-role',
+    checkAuth(UserRole.ADMIN),
+    validateZodSchema(UserValidation.userRoleUpdateValidation),
+    UserController.updateUserRole
+);
 
 
 export const UserRouter = router;

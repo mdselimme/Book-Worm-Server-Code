@@ -4,6 +4,7 @@ import { Server } from "http";
 import app from "./app";
 import mongoose from "mongoose";
 import { envVars } from "./app/config/envVars";
+import { seedDefaultAdmin } from "./app/utils/seedDefaultAdmin";
 
 
 
@@ -33,6 +34,7 @@ const bootstrap = async () => {
 // Start the bootstrap process
 (async () => {
     await bootstrap();
+    await seedDefaultAdmin();
 })();
 
 const serverShutdown = async (message: string, err?: any) => {

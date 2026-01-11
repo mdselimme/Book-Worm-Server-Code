@@ -56,7 +56,32 @@ const updateUserService = async (userId: string, updateData: Partial<IUser>): Pr
 };
 
 
+//Update User Role Service Function
+const updateUserRoleService = async (email: string, role: string): Promise<Partial<IUser> | null> => {
+    //find existing user by email
+    const existingUser = await User.findOne({ email });
+    //if user not found
+    if (!existingUser) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'User does not found.');
+    };
+    //if user already has the role
+    if (existingUser.role === role.toUpperCase()) {
+        throw new ApiError(httpStatus.BAD_REQUEST, `User is already assigned the role of ${role}.`);
+    };
+    //update user role
+    const updatedUser = await User.findByIdAndUpdate(
+        existingUser._id,
+        { role },
+        { new: true, runValidators: true }
+    );
+    return {
+        role: updatedUser?.role
+    };
+};
+
+
 export const UserService = {
     registerUserService,
-    updateUserService
+    updateUserService,
+    updateUserRoleService
 };

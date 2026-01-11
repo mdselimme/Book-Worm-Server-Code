@@ -19,6 +19,11 @@ interface IEnvVariables {
         REFRESH_TOKEN_SECRET: string,
         REFRESH_TOKEN_EXPIRED: string,
     },
+    DEFAULT_ADMIN: {
+        NAME: string;
+        EMAIL: string;
+        PASSWORD: string;
+    }
 };
 
 // Load and validate environment variables
@@ -36,6 +41,9 @@ const loadEnvVariables = (): IEnvVariables => {
         "JWT_ACCESS_TOKEN_EXPIRED",
         "JWT_REFRESH_TOKEN_SECRET",
         "JWT_REFRESH_TOKEN_EXPIRED",
+        "DEFAULT_ADMIN_NAME",
+        "DEFAULT_ADMIN_EMAIL",
+        "DEFAULT_ADMIN_PASSWORD"
     ];
 
     requiredEnvVars.forEach((varName) => {
@@ -62,6 +70,11 @@ const loadEnvVariables = (): IEnvVariables => {
             REFRESH_TOKEN_SECRET: process.env.JWT_REFRESH_TOKEN_SECRET as string,
             REFRESH_TOKEN_EXPIRED: process.env.JWT_REFRESH_TOKEN_EXPIRED as string,
         },
+        DEFAULT_ADMIN: {
+            NAME: process.env.DEFAULT_ADMIN_NAME as string,
+            EMAIL: process.env.DEFAULT_ADMIN_EMAIL as string,
+            PASSWORD: process.env.DEFAULT_ADMIN_PASSWORD as string,
+        }
     };
 };
 

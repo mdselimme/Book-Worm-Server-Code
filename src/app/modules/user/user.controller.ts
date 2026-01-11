@@ -33,7 +33,22 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+// UPDATE USER ROLE CONTROLLER 
+const updateUserRole = catchAsync(async (req: Request, res: Response) => {
+    const { email, role } = req.body;
+
+    const updatedUser = await UserService.updateUserRoleService(email, role);
+    ApiResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User Role Updated Successfully.',
+        data: updatedUser
+    });
+});
+
+
 export const UserController = {
     registerUser,
-    updateUser
+    updateUser,
+    updateUserRole
 }

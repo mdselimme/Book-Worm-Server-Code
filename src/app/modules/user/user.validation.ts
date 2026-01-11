@@ -1,4 +1,5 @@
 import z from "zod";
+import { UserRole } from "./user.interface";
 
 // USER CREATE VALIDATION
 const userCreateValidation = z.object({
@@ -18,7 +19,14 @@ const userUpdateValidation = z.object({
     name: z.string().min(3, 'Full name must be at least 3 characters long'),
 });
 
+//User Role Update Validation
+const userRoleUpdateValidation = z.object({
+    email: z.email({ error: "User email must be a string & valid email address" }),
+    role: z.enum([UserRole.ADMIN, UserRole.USER], { error: "Invalid user role! Value must be from ADMIN, USER the given options." }),
+});
+
 export const UserValidation = {
     userCreateValidation,
     userUpdateValidation,
+    userRoleUpdateValidation,
 };
