@@ -3,6 +3,7 @@ import { IUser } from "./user.interface";
 import { User } from "./user.model";
 import ApiError from '../../utils/ApiError';
 import { makeHashedPassword } from '../../utils/makeHashedPassword';
+import { deleteImageFromCloudinary } from '../../config/cloudinary.config';
 
 //USER REGISTER SERVICE FUNCTION
 const registerUserService = async (userData: Partial<IUser>): Promise<Partial<IUser> | null> => {
@@ -30,6 +31,32 @@ const registerUserService = async (userData: Partial<IUser>): Promise<Partial<IU
     return newUserCreate;
 };
 
+//Update User Data Service Function
+const updateUserService = async (userId: string, updateData: Partial<IUser>): Promise<Partial<IUser> | null> => {
+    //find existing user
+    const existingUser = await User.findById(userId);
+    //if user not found
+    if (!existingUser) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'User does not found.');
+    };
+    //if profile photo is updated, delete the previous one from cloudinary
+    if (updateData?.profilePhoto) {
+        if (existingUser.profilePhoto) {
+            await deleteImageFromCloudinary(existingUser.profilePhoto);
+        }
+    };
+    //update user data
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        updateData,
+        { new: true, runValidators: true }
+    ).select('_id name profilePhoto role');
+    // return updatedUser data
+    return updatedUser;
+};
+
+
 export const UserService = {
     registerUserService,
+    updateUserService
 };

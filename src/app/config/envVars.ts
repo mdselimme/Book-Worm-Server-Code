@@ -12,7 +12,13 @@ interface IEnvVariables {
         API_KEY: string;
         API_SECRET: string;
         SECRET: string;
-    }
+    },
+    JWT: {
+        ACCESS_TOKEN_SECRET: string,
+        ACCESS_TOKEN_EXPIRED: string,
+        REFRESH_TOKEN_SECRET: string,
+        REFRESH_TOKEN_EXPIRED: string,
+    },
 };
 
 // Load and validate environment variables
@@ -25,7 +31,11 @@ const loadEnvVariables = (): IEnvVariables => {
         "CLOUDINARY_CLOUD_NAME",
         "CLOUDINARY_API_KEY",
         "CLOUDINARY_API_SECRET",
-        "CLOUDINARY_SECRET"
+        "CLOUDINARY_SECRET",
+        "JWT_ACCESS_TOKEN_SECRET",
+        "JWT_ACCESS_TOKEN_EXPIRED",
+        "JWT_REFRESH_TOKEN_SECRET",
+        "JWT_REFRESH_TOKEN_EXPIRED",
     ];
 
     requiredEnvVars.forEach((varName) => {
@@ -45,7 +55,13 @@ const loadEnvVariables = (): IEnvVariables => {
             API_KEY: process.env.CLOUDINARY_API_KEY as string,
             API_SECRET: process.env.CLOUDINARY_API_SECRET as string,
             SECRET: process.env.CLOUDINARY_SECRET as string,
-        }
+        },
+        JWT: {
+            ACCESS_TOKEN_SECRET: process.env.JWT_ACCESS_TOKEN_SECRET as string,
+            ACCESS_TOKEN_EXPIRED: process.env.JWT_ACCESS_TOKEN_EXPIRED as string,
+            REFRESH_TOKEN_SECRET: process.env.JWT_REFRESH_TOKEN_SECRET as string,
+            REFRESH_TOKEN_EXPIRED: process.env.JWT_REFRESH_TOKEN_EXPIRED as string,
+        },
     };
 };
 

@@ -13,6 +13,12 @@ const userCreateValidation = z.object({
         .regex(/^(?=.*\d)/, { message: "Password must be contain at least 1 number" }),
 });
 
+// USER UPDATE VALIDATION
+const userUpdateValidation = z.object({
+    name: z.string().min(3, 'Full name must be at least 3 characters long'),
+});
+
 export const UserValidation = {
     userCreateValidation,
+    userUpdateValidation,
 };
