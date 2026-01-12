@@ -29,10 +29,34 @@ const updateTutorial = catchAsync(async (req: Request, res: Response) => {
         message: "Tutorial data updated successfully.",
         statusCode: httpStatus.OK,
         data: result
-    })
+    });
+});
+
+//GET TUTORIAL BY ID CONTROLLER
+const getTutorialById = catchAsync(async (req: Request, res: Response) => {
+    const result = await TutorialService.getTutorialById(req.params.id as string);
+    ApiResponse(res, {
+        success: true,
+        message: "Tutorial data fetched successfully.",
+        statusCode: httpStatus.OK,
+        data: result
+    });
+});
+
+//DELETE TUTORIAL CONTROLLER
+const deleteTutorial = catchAsync(async (req: Request, res: Response) => {
+    await TutorialService.deleteTutorial(req.params.id as string);
+    ApiResponse(res, {
+        success: true,
+        message: "Tutorial data deleted successfully.",
+        statusCode: httpStatus.OK,
+        data: null
+    });
 });
 
 export const TutorialController = {
     createTutorial,
     updateTutorial,
+    getTutorialById,
+    deleteTutorial,
 };

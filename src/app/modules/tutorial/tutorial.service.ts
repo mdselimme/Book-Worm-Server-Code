@@ -35,7 +35,27 @@ const updateTutorial = async (id: string, payload: Partial<ITutorial>): Promise<
     return updatedTutorial;
 };
 
+//GET TUTORIAL BY ID SERVICE
+const getTutorialById = async (id: string): Promise<ITutorial | null> => {
+    const tutorial = await Tutorial.findById(id);
+    if (!tutorial) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Tutorial data does not found.');
+    }
+    return tutorial;
+};
+
+//DELETE TUTORIAL SERVICE
+const deleteTutorial = async (id: string): Promise<void> => {
+    const tutorial = await Tutorial.findById(id);
+    if (!tutorial) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Tutorial data does not found.');
+    }
+    await Tutorial.findByIdAndDelete(id);
+};
+
 export const TutorialService = {
     createTutorial,
     updateTutorial,
+    getTutorialById,
+    deleteTutorial,
 };
