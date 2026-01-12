@@ -1,11 +1,11 @@
 import { model, Schema } from "mongoose";
-import { ITutorial } from "./tutorial.validation";
+import { ITutorial } from "./tutorial.interface";
+
 
 
 const tutorialSchema = new Schema<ITutorial>({
     title: { type: String, required: true, unique: true },
-    tutorialId: { type: String, required: true, unique: true },
-    description: { type: String },
+    videoUrl: { type: String, required: true, unique: true },
 }, {
     timestamps: true,
     versionKey: false,

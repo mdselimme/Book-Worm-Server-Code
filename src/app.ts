@@ -7,10 +7,9 @@ import router from './app/routes';
 import { globalErrorHandler } from './app/middleware/globalErrorHandlers';
 import notFoundRoute from './app/middleware/notFoundRoute';
 
-
 const app: Application = express();
 
-// Middleware
+// Middlewares
 app.use(cors({
     origin: [envVars.CLIENT_SITE_URL, 'http://localhost:3000'],
     credentials: true
@@ -19,7 +18,6 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 
 // default router after server is running
 app.get('/', (req: Request, res: Response) => {
