@@ -3,6 +3,7 @@ import { checkAuth } from "../../middleware/checkAuth";
 import { UserRole } from "../user/user.interface";
 import validateZodSchema from "../../middleware/validateZodSchemaRequest";
 import { ReviewValidation } from "./review.validation";
+import { ReviewController } from "./review.controller";
 
 const router = Router();
 
@@ -11,16 +12,16 @@ router.post(
   "/",
   checkAuth(UserRole.USER),
   validateZodSchema(ReviewValidation.createReviewValidation),
-  BookController.createBook
+  ReviewController.createReview
 );
 
-//UPDATE BOOK ROUTE
-// router.patch("/:id",
-//     checkAuth(UserRole.ADMIN),
-//     multerUpload.single("file"),
-//     validateZodSchema(BookValidation.updateBookValidation),
-//     BookController.updateBook
-// );
+//UPDATE REVIEW ROUTE
+router.patch(
+  "/:id",
+  checkAuth(UserRole.USER),
+  validateZodSchema(ReviewValidation.updateReviewValidation),
+  ReviewController.updateReview
+);
 
 // //GET ALL BOOKS ROUTE
 // router.get("/",

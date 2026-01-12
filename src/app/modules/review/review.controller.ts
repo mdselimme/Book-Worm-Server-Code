@@ -2,9 +2,10 @@ import httpStatus from "http-status";
 import { Request, Response } from "express";
 import ApiResponse from "../../utils/ApiResponse";
 import { ReviewService } from "./review.service";
+import { IJwtTokenPayload } from "../../types/token.type";
 
 //CREATE REVIEW CONTROLLER
-const createReviewService = async (req: Request, res: Response) => {
+const createReview = async (req: Request, res: Response) => {
   const result = await ReviewService.createReviewService(req.body);
 
   ApiResponse(res, {
@@ -15,6 +16,26 @@ const createReviewService = async (req: Request, res: Response) => {
   });
 };
 
+//UPDATE REVIEW CONTROLLER
+const updateReview = async (req: Request, res: Response) => {
+  const reviewId = req.params.id;
+  const decodedToken = req.user;
+
+  const result = await ReviewService.updateReviewService(
+    reviewId as string,
+    req.body,
+    decodedToken as IJwtTokenPayload
+  );
+
+  ApiResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Review data updated successfully.",
+    data: result,
+  });
+};
+
 export const ReviewController = {
-  createReviewService,
+  createReview,
+  updateReview,
 };

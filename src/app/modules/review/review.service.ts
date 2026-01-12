@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import { IReview } from "./review.interface";
 import { Review } from "./review.model";
 import ApiError from "../../utils/ApiError";
+import { IJwtTokenPayload } from "../../types/token.type";
 
 //CREATE REVIEW CONTROLLER
 const createReviewService = async (
@@ -33,6 +34,33 @@ const createReviewService = async (
   return review;
 };
 
+//UPDATE REVIEW CONTROLLER
+const updateReviewService = async (
+  reviewId: string,
+  reviewInput: IReview,
+  decodedToken: IJwtTokenPayload
+): Promise<IReview | null> => {
+  // Check if the review exists
+  const review = await Review.findById(reviewId);
+  if (!review) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Review data does not found.");
+  }
+  // Check if the user is authorized to update the review
+  if (review.reviewer.toString() !== decodedToken.id) {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      "You are not authorized to update this review."
+    );
+  }
+  // Update the review
+  const updatedReview = await Review.findByIdAndUpdate(reviewId, reviewInput, {
+    new: true,
+    runValidators: true,
+  });
+  return updatedReview;
+};
+
 export const ReviewService = {
   createReviewService,
+  updateReviewService,
 };
