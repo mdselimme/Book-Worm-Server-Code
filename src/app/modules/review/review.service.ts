@@ -1,5 +1,5 @@
 import httpStatus from "http-status";
-import { IReview } from "./review.interface";
+import { IReview, ReviewStatus } from "./review.interface";
 import { Review } from "./review.model";
 import ApiError from "../../utils/ApiError";
 import { IJwtTokenPayload } from "../../types/token.type";
@@ -60,7 +60,37 @@ const updateReviewService = async (
   return updatedReview;
 };
 
+//GET REVIEW BY ID SERVICE
+const getReviewByIdService = async (
+  reviewId: string
+): Promise<IReview | null> => {
+  // Check if the review exists
+  const review = await Review.findById(reviewId).populate("reviewer", "name");
+  if (!review) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Review data does not found.");
+  }
+  return review;
+};
+
+//UPDATE REVIEW STATUS SERVICE
+const updateReviewStatusService = async (
+  reviewId: string,
+  status: ReviewStatus
+): Promise<IReview | null> => {
+  // Check if the review exists
+  const review = await Review.findById(reviewId);
+  if (!review) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Review data does not found.");
+  }
+  // Update the review status
+  review.status = status as ReviewStatus;
+  await review.save();
+  return review;
+};
+
 export const ReviewService = {
   createReviewService,
   updateReviewService,
+  getReviewByIdService,
+  updateReviewStatusService,
 };

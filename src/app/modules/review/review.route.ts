@@ -15,6 +15,13 @@ router.post(
   ReviewController.createReview
 );
 
+//UPDATE REVIEW STATUS ROUTE
+router.patch(
+  "/status/:id",
+  checkAuth(UserRole.ADMIN),
+  ReviewController.updateReviewStatus
+);
+
 //UPDATE REVIEW ROUTE
 router.patch(
   "/:id",
@@ -28,10 +35,8 @@ router.patch(
 //     BookController.getAllBooks
 // );
 
-// //GET SINGLE BOOK ROUTE
-// router.get("/:id",
-//     BookController.getBookById
-// );
+//GET SINGLE BOOK ROUTE
+router.get("/:id", ReviewController.getReviewById);
 
 // //DELETE BOOK ROUTE
 // router.delete("/:id",
