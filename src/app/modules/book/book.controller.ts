@@ -2,11 +2,12 @@ import httpStatus from 'http-status';
 import { Request, Response } from "express";
 import ApiResponse from "../../utils/ApiResponse";
 import { BookService } from './book.service';
+import catchAsync from '../../utils/catchAsync';
 
 
 
 //CREATE Book CONTROLLER
-const createBook = async (req: Request, res: Response) => {
+const createBook = catchAsync(async (req: Request, res: Response) => {
 
     const bookData = req.body;
     bookData.coverImage = req.file?.path;
@@ -19,12 +20,11 @@ const createBook = async (req: Request, res: Response) => {
         message: 'Book Added Successfully.',
         data: result
     });
-};
+});
 
 
 //UPDATE Book CONTROLLER
-const updateBook = async (req: Request, res: Response) => {
-
+const updateBook = catchAsync(async (req: Request, res: Response) => {
     const bookId = req.params.id;
 
     const bookData = req.body;
@@ -38,10 +38,10 @@ const updateBook = async (req: Request, res: Response) => {
         message: 'Book Updated Successfully.',
         data: result
     });
-};
+});
 
 //GET ALL BOOKS CONTROLLER
-const getAllBooks = async (req: Request, res: Response) => {
+const getAllBooks = catchAsync(async (req: Request, res: Response) => {
 
     const query = req.query;
 
@@ -53,10 +53,10 @@ const getAllBooks = async (req: Request, res: Response) => {
         message: 'All Books retrieved successfully.',
         data: result
     });
-};
+});
 
 //GET ALL BOOKS CONTROLLER
-const getBookById = async (req: Request, res: Response) => {
+const getBookById = catchAsync(async (req: Request, res: Response) => {
 
     const bookId = req.params.id;
 
@@ -68,10 +68,10 @@ const getBookById = async (req: Request, res: Response) => {
         message: 'Find Book retrieved successfully.',
         data: result
     });
-};
+});
 
 //DELETE BOOK CONTROLLER
-const deleteBookById = async (req: Request, res: Response) => {
+const deleteBookById = catchAsync(async (req: Request, res: Response) => {
 
     const bookId = req.params.id;
 
@@ -83,7 +83,7 @@ const deleteBookById = async (req: Request, res: Response) => {
         message: 'Book data deleted permanently successfully.',
         data: result
     });
-};
+});
 
 
 export const BookController = {

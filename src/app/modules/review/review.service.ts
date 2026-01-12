@@ -3,6 +3,7 @@ import { IReview, ReviewStatus } from "./review.interface";
 import { Review } from "./review.model";
 import ApiError from "../../utils/ApiError";
 import { IJwtTokenPayload } from "../../types/token.type";
+import { UserRole } from "../user/user.interface";
 
 //CREATE REVIEW CONTROLLER
 const createReviewService = async (
@@ -88,9 +89,32 @@ const updateReviewStatusService = async (
   return review;
 };
 
+//DELETE REVIEW SERVICE
+const deleteReviewByIdService = async (
+  reviewId: string,
+  decodedToken: IJwtTokenPayload
+): Promise<void> => {
+  // Check if the review exists
+  const review = await Review.findById(reviewId);
+  if (!review) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Review data does not found.");
+  }
+  // Check if the user is authorized to delete the review
+  if (UserRole.ADMIN !== decodedToken.role) {
+    if (review.reviewer.toString() !== decodedToken.id) {
+      throw new ApiError(
+        httpStatus.UNAUTHORIZED,
+        "You are not authorized to delete this review."
+      );
+    }
+  };
+  await Review.findByIdAndDelete(reviewId);
+};
+
 export const ReviewService = {
   createReviewService,
   updateReviewService,
   getReviewByIdService,
   updateReviewStatusService,
+  deleteReviewByIdService,
 };

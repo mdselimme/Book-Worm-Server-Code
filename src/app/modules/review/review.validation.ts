@@ -37,10 +37,9 @@ const updateReviewValidation = z.object({
 
 //UPDATE REVIEW STATUS VALIDATION
 const updateReviewStatusValidation = z.object({
-  status: z.enum(Object.values(
-    ReviewStatus
-  ), { message: "Status must be one of: PENDING, APPROVE, DECLINED" }
-  ),
+  status:
+    z.enum(Object.values(ReviewStatus),
+      { message: "Status must be one of: PENDING, APPROVE, DECLINED" }),
 });
 
 export const ReviewValidation = {

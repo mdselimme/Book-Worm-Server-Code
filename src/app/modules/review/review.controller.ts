@@ -3,9 +3,10 @@ import { Request, Response } from "express";
 import ApiResponse from "../../utils/ApiResponse";
 import { ReviewService } from "./review.service";
 import { IJwtTokenPayload } from "../../types/token.type";
+import catchAsync from "../../utils/catchAsync";
 
 //CREATE REVIEW CONTROLLER
-const createReview = async (req: Request, res: Response) => {
+const createReview = catchAsync(async (req: Request, res: Response) => {
   const result = await ReviewService.createReviewService(req.body);
 
   ApiResponse(res, {
@@ -14,10 +15,10 @@ const createReview = async (req: Request, res: Response) => {
     message: "Review data created successfully.",
     data: result,
   });
-};
+});
 
 //UPDATE REVIEW CONTROLLER
-const updateReview = async (req: Request, res: Response) => {
+const updateReview = catchAsync(async (req: Request, res: Response) => {
   const reviewId = req.params.id;
   const decodedToken = req.user;
 
@@ -33,10 +34,10 @@ const updateReview = async (req: Request, res: Response) => {
     message: "Review data updated successfully.",
     data: result,
   });
-};
+});
 
 //GET REVIEW BY ID CONTROLLER
-const getReviewById = async (req: Request, res: Response) => {
+const getReviewById = catchAsync(async (req: Request, res: Response) => {
   const reviewId = req.params.id;
 
   const result = await ReviewService.getReviewByIdService(reviewId as string);
@@ -46,10 +47,10 @@ const getReviewById = async (req: Request, res: Response) => {
     message: "Review data retrieved successfully.",
     data: result,
   });
-};
+});
 
 //UPDATE REVIEW STATUS CONTROLLER
-const updateReviewStatus = async (req: Request, res: Response) => {
+const updateReviewStatus = catchAsync(async (req: Request, res: Response) => {
   const reviewId = req.params.id;
   const { status } = req.body;
 
@@ -64,11 +65,28 @@ const updateReviewStatus = async (req: Request, res: Response) => {
     message: "Review status updated successfully.",
     data: result,
   });
-};
+});
+
+//DELETE REVIEW CONTROLLER
+const deleteReviewById = catchAsync(async (req: Request, res: Response) => {
+  const reviewId = req.params.id;
+  const decodedToken = req.user;
+  await ReviewService.deleteReviewByIdService(
+    reviewId as string,
+    decodedToken as IJwtTokenPayload
+  );
+  ApiResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Review data deleted successfully.",
+    data: null,
+  });
+});
 
 export const ReviewController = {
   createReview,
   updateReview,
   getReviewById,
   updateReviewStatus,
+  deleteReviewById,
 };

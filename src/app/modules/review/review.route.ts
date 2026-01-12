@@ -31,18 +31,13 @@ router.patch(
   ReviewController.updateReview
 );
 
-// //GET ALL BOOKS ROUTE
-// router.get("/",
-//     BookController.getAllBooks
-// );
-
-//GET SINGLE BOOK ROUTE
+//GET SINGLE REVIEW ROUTE
 router.get("/:id", ReviewController.getReviewById);
 
-// //DELETE BOOK ROUTE
-// router.delete("/:id",
-//     checkAuth(UserRole.ADMIN),
-//     BookController.deleteBookById
-// );
+// //DELETE REVIEW ROUTE
+router.delete("/:id",
+  checkAuth(UserRole.ADMIN, UserRole.USER),
+  ReviewController.deleteReviewById
+);
 
-export const BookRouter = router;
+export const ReviewRouter = router;
