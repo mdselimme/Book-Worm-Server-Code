@@ -21,4 +21,15 @@ router.patch("/:id",
     TutorialController.updateTutorial
 );
 
+//GET TUTORIAL BY ID ROUTE
+router.get("/:id",
+    TutorialController.getTutorialById
+);
+
+//DELETE TUTORIAL ROUTE
+router.delete("/:id",
+    checkAuth(UserRole.ADMIN),
+    TutorialController.deleteTutorial
+);
+
 export const TutorialRouter = router;

@@ -3,6 +3,8 @@ import { AuthRouter } from "../modules/auth/auth.route";
 import { UserRouter } from "../modules/user/user.route";
 import { CategoriesRouter } from "../modules/categories/categories.route";
 import { BookRouter } from "../modules/book/book.route";
+import { ReviewRouter } from "../modules/review/review.route";
+import { TutorialRouter } from "../modules/tutorial/tutorial.route";
 
 
 interface IRoute {
@@ -28,7 +30,15 @@ const allRoutes: IRoute[] = [
     {
         path: "/book",
         route: BookRouter
-    }
+    },
+    {
+        path: "/review",
+        route: ReviewRouter
+    },
+    {
+        path: "/tutorial",
+        route: TutorialRouter
+    },
 ];
 
 allRoutes.forEach(({ path, route }) => {
