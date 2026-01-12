@@ -1,4 +1,5 @@
 import z from "zod";
+import { ReviewStatus } from "./review.interface";
 
 //CREATE BOOK REVIEW VALIDATION
 const createReviewValidation = z.object({
@@ -34,7 +35,16 @@ const updateReviewValidation = z.object({
     .optional(),
 });
 
+//UPDATE REVIEW STATUS VALIDATION
+const updateReviewStatusValidation = z.object({
+  status: z.enum(Object.values(
+    ReviewStatus
+  ), { message: "Status must be one of: PENDING, APPROVE, DECLINED" }
+  ),
+});
+
 export const ReviewValidation = {
   createReviewValidation,
   updateReviewValidation,
+  updateReviewStatusValidation,
 };

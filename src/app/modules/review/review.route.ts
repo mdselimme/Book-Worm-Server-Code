@@ -19,6 +19,7 @@ router.post(
 router.patch(
   "/status/:id",
   checkAuth(UserRole.ADMIN),
+  validateZodSchema(ReviewValidation.updateReviewStatusValidation),
   ReviewController.updateReviewStatus
 );
 
