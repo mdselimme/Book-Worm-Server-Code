@@ -40,7 +40,7 @@ const updateUserService = async (userId: string, updateData: Partial<IUser>): Pr
         throw new ApiError(httpStatus.NOT_FOUND, 'User does not found.');
     };
     //if profile photo is updated, delete the previous one from cloudinary
-    if (updateData?.profilePhoto) {
+    if (updateData?.profilePhoto && existingUser.profilePhoto.includes('cloudinary.com')) {
         if (existingUser.profilePhoto) {
             await deleteImageFromCloudinary(existingUser.profilePhoto);
         }
