@@ -40,7 +40,7 @@ const updateUserService = async (userId: string, updateData: Partial<IUser>): Pr
         throw new ApiError(httpStatus.NOT_FOUND, 'User does not found.');
     };
     //if profile photo is updated, delete the previous one from cloudinary
-    if (updateData?.profilePhoto) {
+    if (updateData?.profilePhoto && existingUser.profilePhoto.includes('cloudinary.com')) {
         if (existingUser.profilePhoto) {
             await deleteImageFromCloudinary(existingUser.profilePhoto);
         }
@@ -78,10 +78,22 @@ const updateUserRoleService = async (email: string, role: string): Promise<Parti
         role: updatedUser?.role
     };
 };
+//GET CURRENT USER SERVICE FUNCTION
+const getCurrentUserService = async (userId: string): Promise<Partial<IUser> | null> => {
+    //find existing user
+    const existingUser = await User.findById(userId)
+        .select('-password -createdAt -updatedAt');
+    //if user not found
+    if (!existingUser) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'User does not found.');
+    };
+    return existingUser;
+};
 
 
 export const UserService = {
     registerUserService,
     updateUserService,
-    updateUserRoleService
+    updateUserRoleService,
+    getCurrentUserService
 };

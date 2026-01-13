@@ -16,6 +16,11 @@ router.post('/register',
     validateZodSchema(UserValidation.userCreateValidation),
     UserController.registerUser
 );
+//GET ME USER ROUTE
+router.get('/me',
+    checkAuth(...Object.values(UserRole)),
+    UserController.getCurrentUser
+);
 // USER UPDATE ROUTE
 router.patch('/',
     checkAuth(...Object.values(UserRole)),
