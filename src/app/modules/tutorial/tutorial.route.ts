@@ -26,6 +26,11 @@ router.get("/:id",
     TutorialController.getTutorialById
 );
 
+//GET ALL TUTORIALS ROUTE
+router.get("/",
+    TutorialController.getAllTutorials
+);
+
 //DELETE TUTORIAL ROUTE
 router.delete("/:id",
     checkAuth(UserRole.ADMIN),

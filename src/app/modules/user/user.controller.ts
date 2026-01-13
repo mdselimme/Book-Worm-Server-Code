@@ -60,10 +60,23 @@ const getCurrentUser = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+// UPDATE USER ROLE CONTROLLER 
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await UserService.getAllUsersService(req.query);
+    ApiResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'All Users Retrieved Successfully.',
+        data: result
+    });
+});
+
 
 export const UserController = {
     registerUser,
     updateUser,
     updateUserRole,
-    getCurrentUser
+    getCurrentUser,
+    getAllUsers
 }

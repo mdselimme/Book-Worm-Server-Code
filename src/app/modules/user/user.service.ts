@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
 import { IUser } from "./user.interface";
 import { User } from "./user.model";
@@ -90,10 +91,21 @@ const getCurrentUserService = async (userId: string): Promise<Partial<IUser> | n
     return existingUser;
 };
 
+//GET ALL USERS SERVICE FUNCTION
+const getAllUsersService = async (query: any): Promise<Partial<IUser>[] | null> => {
+    const skip = (query.page || 0) * (query.limit || 10);
+    const users = await User.find()
+        .limit(query.limit || 10)
+        .skip(skip)
+        .select('-password -createdAt -updatedAt');
+    return users;
+};
+
 
 export const UserService = {
     registerUserService,
     updateUserService,
     updateUserRoleService,
-    getCurrentUserService
+    getCurrentUserService,
+    getAllUsersService
 };

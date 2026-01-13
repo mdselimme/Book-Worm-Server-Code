@@ -54,9 +54,21 @@ const deleteTutorial = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+//GET ALL TUTORIALS CONTROLLER
+const getAllTutorials = catchAsync(async (req: Request, res: Response) => {
+    const result = await TutorialService.getAllTutorials(req.query);
+    ApiResponse(res, {
+        success: true,
+        message: "All tutorials fetched successfully.",
+        statusCode: httpStatus.OK,
+        data: result
+    });
+});
+
 export const TutorialController = {
     createTutorial,
     updateTutorial,
     getTutorialById,
     deleteTutorial,
+    getAllTutorials
 };

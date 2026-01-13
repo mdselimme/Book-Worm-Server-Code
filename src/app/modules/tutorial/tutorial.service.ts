@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
 import ApiError from "../../utils/ApiError";
 import { ITutorial } from "./tutorial.interface";
@@ -53,9 +54,19 @@ const deleteTutorial = async (id: string): Promise<void> => {
     await Tutorial.findByIdAndDelete(id);
 };
 
+//GET ALL TUTORIALS SERVICE
+const getAllTutorials = async (query: any): Promise<ITutorial[]> => {
+    const skip = (query.page || 0) * (query.limit || 10);
+    const tutorials = await Tutorial.find()
+        .limit(query.limit || 10)
+        .skip(skip);
+    return tutorials;
+}
+
 export const TutorialService = {
     createTutorial,
     updateTutorial,
     getTutorialById,
     deleteTutorial,
+    getAllTutorials
 };

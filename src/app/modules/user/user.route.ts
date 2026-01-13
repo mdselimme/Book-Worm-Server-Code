@@ -35,5 +35,11 @@ router.patch('/update-role',
     UserController.updateUserRole
 );
 
+//GET ALL USERS ROUTE
+router.get('/',
+    checkAuth(UserRole.ADMIN),
+    UserController.getAllUsers
+);
+
 
 export const UserRouter = router;
