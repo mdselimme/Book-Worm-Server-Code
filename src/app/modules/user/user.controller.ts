@@ -47,8 +47,23 @@ const updateUserRole = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+// UPDATE USER ROLE CONTROLLER 
+const getCurrentUser = catchAsync(async (req: Request, res: Response) => {
+    const decodedToken = req.user as IJwtTokenPayload;
+
+    const result = await UserService.getCurrentUserService(decodedToken.id);
+    ApiResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Me User Retrieved Successfully.',
+        data: result
+    });
+});
+
+
 export const UserController = {
     registerUser,
     updateUser,
-    updateUserRole
+    updateUserRole,
+    getCurrentUser
 }
