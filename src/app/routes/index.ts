@@ -6,6 +6,7 @@ import { BookRouter } from "../modules/book/book.route";
 import { ReviewRouter } from "../modules/review/review.route";
 import { TutorialRouter } from "../modules/tutorial/tutorial.route";
 import { ReadingRouter } from "../modules/reading/reading.route";
+import { StatsRoutes } from "../modules/stats/stats.route";
 
 
 interface IRoute {
@@ -43,6 +44,10 @@ const allRoutes: IRoute[] = [
     {
         path: "/reading",
         route: ReadingRouter
+    },
+    {
+        path: "/stats",
+        route: StatsRoutes
     },
 ];
 

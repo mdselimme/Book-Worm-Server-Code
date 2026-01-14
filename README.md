@@ -487,6 +487,210 @@ npm run dev
 }
 ```
 
+## Stats Api Description:
+
+The Stats API provides comprehensive statistics for both users and administrators.
+
+### 1. Get Admin Statistics
+
+Get comprehensive statistics for the entire platform (admin only).
+
+- **Method:** `GET`
+- **Endpoint:** `http://localhost:5000/api/v1/stats/admin`
+- **Authorization:** Admin only
+- **Headers:** `Authorization: <access_token>` or Cookie: `accessToken=<token>`
+
+#### Response:
+
+```json
+{
+    "statusCode": 200,
+    "success": true,
+    "message": "Admin statistics retrieved successfully",
+    "data": {
+        "overview": {
+            "totalUsers": 150,
+            "totalAdmins": 3,
+            "totalBooks": 500,
+            "totalCategories": 25,
+            "totalReviews": 320,
+            "totalReadingActivities": 680
+        },
+        "thisMonth": {
+            "newUsers": 12,
+            "newBooks": 25,
+            "newReviews": 45
+        },
+        "readingStats": {
+            "wantToRead": 180,
+            "currentlyReading": 95,
+            "completed": 405
+        },
+        "reviewStats": {
+            "pending": 25,
+            "approved": 280,
+            "declined": 15
+        },
+        "popularBooks": [
+            {
+                "_id": "book_id",
+                "title": "The Great Gatsby",
+                "author": "F. Scott Fitzgerald",
+                "coverImage": "image_url",
+                "readCount": 85
+            }
+        ],
+        "topRatedBooks": [
+            {
+                "_id": "book_id",
+                "title": "To Kill a Mockingbird",
+                "author": "Harper Lee",
+                "coverImage": "image_url",
+                "averageRating": 4.8,
+                "reviewCount": 42
+            }
+        ],
+        "activeUsers": [
+            {
+                "_id": "user_id",
+                "name": "John Doe",
+                "email": "john@example.com",
+                "profilePhoto": "photo_url",
+                "activityCount": 45
+            }
+        ],
+        "popularCategories": [
+            {
+                "_id": "category_id",
+                "title": "Fiction",
+                "bookCount": 120
+            }
+        ]
+    }
+}
+```
+
+### 2. Get User Statistics
+
+Get personalized statistics for the authenticated user.
+
+- **Method:** `GET`
+- **Endpoint:** `http://localhost:5000/api/v1/stats/user`
+- **Authorization:** User or Admin
+- **Headers:** `Authorization: <access_token>` or Cookie: `accessToken=<token>`
+
+#### Response:
+
+```json
+{
+    "statusCode": 200,
+    "success": true,
+    "message": "User statistics retrieved successfully",
+    "data": {
+        "readingStats": {
+            "wantToRead": 12,
+            "currentlyReading": 5,
+            "completed": 28,
+            "total": 45
+        },
+        "reviewStats": {
+            "total": 18,
+            "approved": 16,
+            "pending": 2,
+            "averageRating": 4.2
+        },
+        "recentlyCompleted": [
+            {
+                "_id": "reading_id",
+                "user": "user_id",
+                "book": {
+                    "_id": "book_id",
+                    "title": "1984",
+                    "author": "George Orwell",
+                    "coverImage": "image_url",
+                    "description": "A dystopian novel..."
+                },
+                "progress": "READ",
+                "createdAt": "2026-01-10T10:30:00.000Z",
+                "updatedAt": "2026-01-12T15:45:00.000Z"
+            }
+        ],
+        "currentlyReading": [
+            {
+                "_id": "reading_id",
+                "user": "user_id",
+                "book": {
+                    "_id": "book_id",
+                    "title": "Pride and Prejudice",
+                    "author": "Jane Austen",
+                    "coverImage": "image_url",
+                    "description": "A romantic novel..."
+                },
+                "progress": "CURRENTLY_READING",
+                "createdAt": "2026-01-05T08:20:00.000Z",
+                "updatedAt": "2026-01-13T12:30:00.000Z"
+            }
+        ],
+        "favoriteCategories": [
+            {
+                "_id": "category_id",
+                "title": "Classic Literature",
+                "count": 8
+            },
+            {
+                "_id": "category_id",
+                "title": "Science Fiction",
+                "count": 6
+            }
+        ],
+        "recentReviews": [
+            {
+                "_id": "review_id",
+                "book": {
+                    "_id": "book_id",
+                    "title": "The Hobbit",
+                    "author": "J.R.R. Tolkien",
+                    "coverImage": "image_url",
+                    "description": "A fantasy adventure..."
+                },
+                "reviewer": "user_id",
+                "rating": 5,
+                "status": "APPROVE",
+                "description": "An amazing adventure story!",
+                "createdAt": "2026-01-11T14:20:00.000Z"
+            }
+        ],
+        "activityStats": {
+            "activeDaysLast30Days": 18,
+            "totalActivities": 63
+        }
+    }
+}
+```
+
+### Stats Features:
+
+#### Admin Statistics Include:
+
+- **Overview:** Total counts of users, admins, books, categories, reviews, and reading activities
+- **This Month:** New additions this month (users, books, reviews)
+- **Reading Statistics:** Breakdown by progress (want to read, currently reading, completed)
+- **Review Statistics:** Breakdown by status (pending, approved, declined)
+- **Popular Books:** Top 5 most read books
+- **Top Rated Books:** Top 5 highest-rated books with average ratings
+- **Active Users:** Top 5 most active users by activities
+- **Popular Categories:** Top 5 categories by book count
+
+#### User Statistics Include:
+
+- **Reading Statistics:** Personal reading progress breakdown with totals
+- **Review Statistics:** Total reviews, approval status, and average rating given
+- **Recently Completed:** Last 5 books marked as read
+- **Currently Reading:** Books currently in progress
+- **Favorite Categories:** Top 5 categories based on completed books
+- **Recent Reviews:** Last 5 reviews submitted
+- **Activity Statistics:** Active days in last 30 days and total activities
+
 ## Development Mode Error Example Schema
 
 #### Response:
@@ -516,3 +720,5 @@ npm run dev
     "stack": null
 }
 ```
+
+---
