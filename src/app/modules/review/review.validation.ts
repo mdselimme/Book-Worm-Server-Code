@@ -8,7 +8,7 @@ const createReviewValidation = z.object({
       message: "Invalid book ID format",
     })
     .length(24, { message: "Invalid book Object ID length." }),
-  user: z
+  reviewer: z
     .string({
       message: "Invalid user ID format",
     })

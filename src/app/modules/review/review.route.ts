@@ -30,6 +30,15 @@ router.patch(
   validateZodSchema(ReviewValidation.updateReviewValidation),
   ReviewController.updateReview
 );
+//GET ALL REVIEW BY BOOK ID ROUTE
+router.get("/book/:bookId",
+  ReviewController.getAllReviewsByBookId
+);
+//GET REVIEWS SPECIFIC BOOK AND USER ROUTE
+router.get("/book/:bookId/user/:userId",
+  ReviewController.getReviewByBookAndUser
+);
+
 
 //GET SINGLE REVIEW ROUTE
 router.get("/:id", ReviewController.getReviewById);

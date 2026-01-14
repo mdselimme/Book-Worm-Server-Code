@@ -111,10 +111,36 @@ const deleteReviewByIdService = async (
   await Review.findByIdAndDelete(reviewId);
 };
 
+//GET ALL REVIEWS BY BOOK ID SERVICE
+const getAllReviewsByBookId = async (
+  bookId: string
+): Promise<IReview[]> => {
+  const reviews = await Review.find(
+    { book: bookId, status: ReviewStatus.APPROVE }
+  )
+    .populate("reviewer", "name");
+  return reviews;
+}
+
+//GET REVIEW BY BOOK AND USER SERVICE
+const getReviewByBookAndUser = async (
+  bookId: string,
+  userId: string
+): Promise<IReview | null> => {
+  const review = await Review.findOne(
+    { book: bookId, reviewer: userId }
+  )
+    .populate("reviewer", "name");
+  return review;
+}
+
+//EXPORTING ALL SERVICES
 export const ReviewService = {
   createReviewService,
   updateReviewService,
   getReviewByIdService,
   updateReviewStatusService,
   deleteReviewByIdService,
+  getAllReviewsByBookId,
+  getReviewByBookAndUser,
 };

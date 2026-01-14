@@ -23,6 +23,11 @@ interface IEnvVariables {
         NAME: string;
         EMAIL: string;
         PASSWORD: string;
+    },
+    RATE_LIMITER: {
+        RATE_LIMITER_WINDOW_MS: string,
+        RATE_LIMITER_AUTH_MAX_REQUEST: string,
+        RATE_LIMITER_API_MAX_REQUEST: string,
     }
 };
 
@@ -43,7 +48,10 @@ const loadEnvVariables = (): IEnvVariables => {
         "JWT_REFRESH_TOKEN_EXPIRED",
         "DEFAULT_ADMIN_NAME",
         "DEFAULT_ADMIN_EMAIL",
-        "DEFAULT_ADMIN_PASSWORD"
+        "DEFAULT_ADMIN_PASSWORD",
+        "RATE_LIMITER_WINDOW_MS",
+        "RATE_LIMITER_AUTH_MAX_REQUEST",
+        "RATE_LIMITER_API_MAX_REQUEST"
     ];
 
     requiredEnvVars.forEach((varName) => {
@@ -74,6 +82,11 @@ const loadEnvVariables = (): IEnvVariables => {
             NAME: process.env.DEFAULT_ADMIN_NAME as string,
             EMAIL: process.env.DEFAULT_ADMIN_EMAIL as string,
             PASSWORD: process.env.DEFAULT_ADMIN_PASSWORD as string,
+        },
+        RATE_LIMITER: {
+            RATE_LIMITER_WINDOW_MS: process.env.RATE_LIMITER_WINDOW_MS as string,
+            RATE_LIMITER_AUTH_MAX_REQUEST: process.env.RATE_LIMITER_AUTH_MAX_REQUEST as string,
+            RATE_LIMITER_API_MAX_REQUEST: process.env.RATE_LIMITER_API_MAX_REQUEST as string,
         }
     };
 };

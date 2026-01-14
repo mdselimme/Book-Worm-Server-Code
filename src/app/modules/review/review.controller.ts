@@ -83,10 +83,37 @@ const deleteReviewById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+//get all reviews by book id controller
+const getAllReviewsByBookId = catchAsync(async (req: Request, res: Response) => {
+  const bookId = req.params.bookId;
+  const result = await ReviewService.getAllReviewsByBookId(bookId as string);
+  ApiResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Books Reviews retrieved successfully.",
+    data: result,
+  });
+});
+
+//get review by book and user controller
+const getReviewByBookAndUser = catchAsync(async (req: Request, res: Response) => {
+  const bookId = req.params.bookId;
+  const userId = req.params.userId;
+  const result = await ReviewService.getReviewByBookAndUser(bookId as string, userId as string);
+  ApiResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User Book Review retrieved successfully.",
+    data: result,
+  });
+});
+
 export const ReviewController = {
   createReview,
   updateReview,
   getReviewById,
   updateReviewStatus,
   deleteReviewById,
+  getAllReviewsByBookId,
+  getReviewByBookAndUser,
 };
