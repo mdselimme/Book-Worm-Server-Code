@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IReading } from "./reading.interface";
+import { IReading, ReadingProgress } from "./reading.interface";
 
 
 const readingSchema = new Schema<IReading>(
@@ -16,7 +16,8 @@ const readingSchema = new Schema<IReading>(
         },
         progress: {
             type: String,
-            enum: ['WANT_TO_READ', 'CURRENTLY_READING', 'READ'],
+            enum: Object.values(ReadingProgress),
+            default: ReadingProgress.WANT_TO_READ,
             required: true,
         },
     },
