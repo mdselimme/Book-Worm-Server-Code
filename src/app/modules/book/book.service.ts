@@ -30,13 +30,6 @@ const updateBook = async (bookId: string, bookInput: Partial<IBook>) => {
     if (!bookExists) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Book data not found. Invalid Book ID.');
     }
-    //check book exist by title
-    if (bookInput.title) {
-        const bookExistsByTitle = await Book.findOne({ title: bookInput.title });
-        if (bookExistsByTitle) {
-            throw new ApiError(httpStatus.BAD_REQUEST, 'Another book already exists with this title.');
-        }
-    };
     //delete old cover image from cloudinary if new image is provided
     if (bookInput.coverImage) {
         await deleteImageFromCloudinary(bookExists.coverImage);

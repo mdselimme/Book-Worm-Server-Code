@@ -47,15 +47,16 @@ const getAllCategoriesService = async (query: any) => {
     // Destructure pagination parameters
     const { limit, page, search } = query;
     // Use query builder to get categories with pagination
-    const categories = await queryBuilder({
-        model: Category,
-        query: {
-            limit: limit,
-            page: page,
-            search: search,
-        },
-        searchFields: ['title'],
-    })
+    // const categories = await queryBuilder({
+    //     model: Category,
+    //     query: {
+    //         limit: limit,
+    //         page: page,
+    //         search: search,
+    //     },
+    //     searchFields: ['title'],
+    // })
+    const categories = await Category.find();
     return categories;
 };
 

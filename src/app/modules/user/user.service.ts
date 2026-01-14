@@ -95,8 +95,6 @@ const getCurrentUserService = async (userId: string): Promise<Partial<IUser> | n
 const getAllUsersService = async (query: any): Promise<Partial<IUser>[] | null> => {
     const skip = (query.page || 0) * (query.limit || 10);
     const users = await User.find()
-        .limit(query.limit || 10)
-        .skip(skip)
         .select('-password -createdAt -updatedAt');
     return users;
 };
