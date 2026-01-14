@@ -4,18 +4,20 @@ import { Review } from "./review.model";
 import ApiError from "../../utils/ApiError";
 import { IJwtTokenPayload } from "../../types/token.type";
 import { UserRole } from "../user/user.interface";
+import { Book } from "../book/book.model";
+import { User } from "../user/user.model";
 
 //CREATE REVIEW CONTROLLER
 const createReviewService = async (
   reviewInput: IReview
 ): Promise<IReview | null> => {
   // Check if the book exists
-  const bookExists = await Review.findById(reviewInput.book);
+  const bookExists = await Book.findById(reviewInput.book);
   if (!bookExists) {
     throw new ApiError(httpStatus.NOT_FOUND, "Book data does not found.");
   }
   //check user exists
-  const userExists = await Review.findById(reviewInput.reviewer);
+  const userExists = await User.findById(reviewInput.reviewer);
   if (!userExists) {
     throw new ApiError(httpStatus.NOT_FOUND, "User data does not found.");
   }
