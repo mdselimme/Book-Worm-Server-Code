@@ -38,7 +38,11 @@ router.get("/book/:bookId",
 router.get("/book/:bookId/user/:userId",
   ReviewController.getReviewByBookAndUser
 );
-
+//GET ALL REVIEWS ROUTE
+router.get("/",
+  checkAuth(UserRole.ADMIN),
+  ReviewController.getAllReviews
+);
 
 //GET SINGLE REVIEW ROUTE
 router.get("/:id", ReviewController.getReviewById);

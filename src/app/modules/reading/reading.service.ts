@@ -1,3 +1,4 @@
+import { IJwtTokenPayload } from "../../types/token.type";
 import { Book } from "../book/book.model";
 import { User } from "../user/user.model";
 import { IReading, ReadingProgress } from "./reading.interface";
@@ -46,8 +47,16 @@ const updateReadingProgressService = async (id: string, progress: ReadingProgres
     await reading.save();
     return reading;
 };
+//get books by user id service
+const getBooksByUserIdService = async (decodedToken: IJwtTokenPayload) => {
+    const readings = await Reading.find({ user: decodedToken.id })
+        .populate("book", "title author coverImage");
+    return readings;
+}
+
 
 export const readingService = {
     wantToReadBookService,
     updateReadingProgressService,
+    getBooksByUserIdService,
 };

@@ -91,5 +91,5 @@ export const BookController = {
     updateBook,
     getAllBooks,
     getBookById,
-    deleteBookById
+    deleteBookById,
 };

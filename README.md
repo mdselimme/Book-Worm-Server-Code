@@ -78,7 +78,7 @@ npm run dev
 
 - User can create an account with name, email, password
 
-#### 1. user create api
+#### 1. User Register api
 
 - method: `POST` api endpoint: http://localhost:5000/api/v1/user/register
 
@@ -124,7 +124,7 @@ npm run dev
 }
 ```
 
-#### 2. user update api
+#### 2. User Update api
 
 - method: `PATCH` api endpoint: http://localhost:5000/api/v1/user
 
@@ -366,6 +366,127 @@ npm run dev
 }
 ```
 
+## Book Categories Api Description:
+
+- Travel Type CRUD.
+
+#### 1. CREATE Categories
+
+- method: `POST` api endpoint: http://localhost:5000/api/v1/categories
+
+##### Description
+
+**credentials**: true,
+**user role**: ADMIN
+
+##### schema design:
+
+```json
+{
+    //min 3 characters
+    "title": string,
+}
+```
+
+##### Request:
+
+```json
+{
+    "title": "Comic",
+}
+```
+
+#### Response:
+
+```json
+{
+    "message": "Categories created successfully",
+    "statusCode": 201,
+    "success": true,
+    "data": {
+        "_id": "69414049960ca41c72e2998d",
+        "title": "Comic",
+    }
+}
+```
+
+#### 2. UPDATE Categories
+
+- method: `PATCH` api endpoint: http://localhost:5000/api/v1/categories/{travel-type-objectid}
+
+##### Description
+
+**credentials**: true,
+**user role**: ADMIN
+
+##### schema design:
+
+```json
+{
+    //min 3 characters
+    "title": string,
+}
+```
+
+##### Request:
+
+```json
+{
+    "title": "Comic 2",
+}
+```
+
+#### Response:
+
+```json
+{
+    "message": "Categories updated successfully",
+    "statusCode": 201,
+    "success": true,
+    "data": {
+        "_id": "69414049960ca41c72e2998d",
+        "typeName": "Comic 2",
+    }
+}
+```
+
+#### 3. GET ALL CATEGORIES
+
+- method: `GET` api endpoint: http://localhost:5000/api/v1/categories
+
+##### Description
+
+**pagination** support, query data {limit, page}
+
+#### Response:
+
+```json
+{
+    "message": "Categories retrieved successfully",
+    "statusCode": 200,
+    "success": true,
+    "data": [{
+        "_id": "69414049960ca41c72e2998d",
+        "typeName": "Comic",
+    },...]
+}
+```
+
+#### 4. DELETE SINGLE CATEGORIES BY ID
+
+- method: `DELETE` api endpoint: http://localhost:5000/api/v1/categories/{objectid}
+
+#### Response:
+
+```json
+{
+    "message": "Categories deleted successfully",
+    "statusCode": 200,
+    "success": true,
+    "data": null
+}
+```
+
 ## Development Mode Error Example Schema
 
 #### Response:
@@ -378,7 +499,7 @@ npm run dev
     "error": {
         "statusCode": 404
     },
-    "stack": "Error: Review not found\n    at F:\\1.Web-Development\\3.Level-2-Course\\16.Final-Project\\travel-buddy-server-site\\src\\app\\modules\\review\\review.service.ts:97:15\n    at Generator.next (<anonymous>)\n    at fulfilled (F:\\1.Web-Development\\3.Level-2-Course\\16.Final-Project\\travel-buddy-server-site\\src\\app\\modules\\review\\review.service.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)"
+    "stack": "Error: Review not found\n    at F:\\1.Web-Development\\3.Level-2-Course\\16.Final-Project\\bookworm-server-site\\src\\app\\modules\\review\\review.service.ts:97:15\n    at Generator.next (<anonymous>)\n    at fulfilled (F:\\1.Web-Development\\3.Level-2-Course\\16.Final-Project\\bookworm-server-site\\src\\app\\modules\\review\\review.service.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)"
 }
 ```
 

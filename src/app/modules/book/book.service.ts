@@ -100,5 +100,5 @@ export const BookService = {
     updateBook,
     getAllBooks,
     getBookById,
-    deleteBookById
+    deleteBookById,
 }

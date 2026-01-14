@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
 import ApiResponse from "../../utils/ApiResponse";
 import { readingService } from "./reading.service";
+import { IJwtTokenPayload } from "../../types/token.type";
 
 
 //REGISTER USER CONTROLLER
@@ -33,7 +34,21 @@ const updateReadingProgress = catchAsync(async (req: Request, res: Response) => 
     });
 });
 
+//get books by user id controller
+const getBooksByUserId = catchAsync(async (req: Request, res: Response) => {
+    const decodedToken = req.user;
+
+    const result = await readingService.getBooksByUserIdService(decodedToken as IJwtTokenPayload);
+    ApiResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Books retrieved successfully.',
+        data: result,
+    });
+});
+
 export const ReadingController = {
     wantToReadBook,
-    updateReadingProgress
+    updateReadingProgress,
+    getBooksByUserId
 };

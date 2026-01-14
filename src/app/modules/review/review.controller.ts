@@ -108,6 +108,19 @@ const getReviewByBookAndUser = catchAsync(async (req: Request, res: Response) =>
   });
 });
 
+//GET ALL REVIEWS CONTROLLER
+const getAllReviews = catchAsync(async (req: Request, res: Response) => {
+
+  const result = await ReviewService.getAllReviews();
+  ApiResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Reviews Retrieved Successfully.',
+    data: result
+  });
+});
+
+
 export const ReviewController = {
   createReview,
   updateReview,
@@ -116,4 +129,5 @@ export const ReviewController = {
   deleteReviewById,
   getAllReviewsByBookId,
   getReviewByBookAndUser,
+  getAllReviews
 };

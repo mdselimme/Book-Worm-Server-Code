@@ -14,6 +14,12 @@ router.post('/want-to-read',
     validateZodSchema(readingValidation.wantToReadBookSchema),
     ReadingController.wantToReadBook
 );
+//GET BOOK BY USER ID
+router.get('/user-read-list',
+    checkAuth(UserRole.USER),
+    ReadingController.getBooksByUserId
+);
+
 //UPDATE READING PROGRESS
 router.patch('/update-progress/:id',
     checkAuth(UserRole.USER),

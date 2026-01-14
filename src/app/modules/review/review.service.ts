@@ -136,6 +136,14 @@ const getReviewByBookAndUser = async (
   return review;
 }
 
+//GET ALL REVIEWS SERVICE
+const getAllReviews = async (): Promise<IReview[]> => {
+  const reviews = await Review.find()
+    .populate("reviewer", "name")
+    .populate("book", "title");
+  return reviews;
+};
+
 //EXPORTING ALL SERVICES
 export const ReviewService = {
   createReviewService,
@@ -145,4 +153,5 @@ export const ReviewService = {
   deleteReviewByIdService,
   getAllReviewsByBookId,
   getReviewByBookAndUser,
+  getAllReviews
 };
