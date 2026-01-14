@@ -7,6 +7,7 @@ import { ReviewRouter } from "../modules/review/review.route";
 import { TutorialRouter } from "../modules/tutorial/tutorial.route";
 import { ReadingRouter } from "../modules/reading/reading.route";
 import { StatsRoutes } from "../modules/stats/stats.route";
+import { apiLimiter } from "../middleware/rateLimiter";
 
 
 interface IRoute {
@@ -15,6 +16,8 @@ interface IRoute {
 }
 
 const router = Router();
+
+router.use(apiLimiter);
 
 const allRoutes: IRoute[] = [
     {

@@ -4,11 +4,13 @@ import { AuthValidation } from "./auth.validation";
 import { AuthController } from "./auth.controller";
 import { checkAuth } from "../../middleware/checkAuth";
 import { UserRole } from "../user/user.interface";
+import { authLimiter } from "../../middleware/rateLimiter";
 
 const router = Router();
 
 // AUTH LOGIN ROUTE 
 router.post('/login',
+    authLimiter,
     validateZodSchema(AuthValidation.loginValidation),
     AuthController.logInUser
 );
