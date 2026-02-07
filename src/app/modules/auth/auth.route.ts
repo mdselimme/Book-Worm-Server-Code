@@ -22,7 +22,6 @@ router.patch('/change-password',
 );
 //AUTH REFRESH TOKEN ROUTE
 router.post('/refresh-token',
-    checkAuth(...Object.values(UserRole)),
     AuthController.undoRefreshToken
 );
 // AUTH LOGOUT ROUTE
